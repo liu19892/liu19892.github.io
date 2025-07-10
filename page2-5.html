@@ -1,0 +1,668 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周丽君副教授 - 人物详情</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Serif SC', 'Segoe UI', serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e6edf2 100%);
+            color: #2d3748;
+            line-height: 1.7;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px 100px;
+        }
+
+        /* 返回按钮 */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: #2c3e50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            z-index: 100;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+            .back-button:hover {
+                background: #3498db;
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+            }
+
+        /* 移动端导航栏 */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: none;
+            z-index: 100;
+            box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.1);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 12px 0;
+        }
+
+        .mobile-nav-content {
+            display: flex;
+            justify-content: space-around;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #4a5568;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            padding: 5px 15px;
+            border-radius: 15px;
+        }
+
+            .nav-item:hover, .nav-item.active {
+                color: #2c3e50;
+                background: #f0f4f8;
+            }
+
+            .nav-item i {
+                font-size: 1.4rem;
+                margin-bottom: 5px;
+            }
+
+        /* 头部信息 */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .page-header::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 5px;
+                background: linear-gradient(to right, #3498db, #e74c3c);
+            }
+
+        .journal-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #e8f4fc;
+            letter-spacing: 2px;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #e9ecef, #adb5bd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+            color: #cbd5e0;
+        }
+
+        /* 人物详情内容 */
+        .member-detail {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .photo-section {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-photo {
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            border-radius: 15px;
+            object-fit: cover;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 8px solid white;
+            transition: all 0.3s ease;
+        }
+
+            .main-photo:hover {
+                transform: scale(1.02);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+
+        .photo-caption {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #4a5568;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .info-section {
+            flex: 2;
+            min-width: 300px;
+            background: white;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+            .info-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 6px;
+                background: linear-gradient(to right, #e74c3c, #c0392b);
+            }
+
+        .member-name {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+            .member-name::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 80px;
+                height: 4px;
+                background: linear-gradient(to right, #3498db, #2c3e50);
+                border-radius: 2px;
+            }
+
+        .position {
+            color: #e74c3c;
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .info-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+            .info-item h3 {
+                font-size: 1.1rem;
+                color: #3498db;
+                margin-bottom: 8px;
+            }
+
+            .info-item p {
+                font-size: 1.1rem;
+                color: #2d3748;
+                font-weight: 500;
+            }
+
+        .contact-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #cbd5e0;
+        }
+
+            .contact-info h3 {
+                font-size: 1.3rem;
+                color: #2c3e50;
+                margin-bottom: 15px;
+            }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+            .contact-item i {
+                width: 30px;
+                color: #3498db;
+                font-size: 1.2rem;
+            }
+
+        /* 详细介绍部分 */
+        .bio-section {
+            background: white;
+            border-radius: 18px;
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 700;
+        }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 120px;
+                height: 5px;
+                background: linear-gradient(to right, #3498db, #2c3e50);
+                border-radius: 3px;
+            }
+
+        .bio-content {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #4a5568;
+        }
+
+            .bio-content p {
+                margin-bottom: 25px;
+                text-align: justify;
+            }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.05));
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        /* 底部导航 */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 15px 35px;
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            font-size: 1.1rem;
+        }
+
+            .nav-button:hover {
+                background: linear-gradient(to right, #2980b9, #2573a7);
+                transform: translateY(-3px);
+                box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+            }
+
+            .nav-button i {
+                margin: 0 10px;
+                transition: transform 0.3s ease;
+            }
+
+            .nav-button:hover i {
+                transform: translateX(-5px);
+            }
+
+        .next-button:hover i {
+            transform: translateX(5px);
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #718096;
+            font-size: 1.1rem;
+            margin-top: 30px;
+            background: #2c3e50;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            color: #cbd5e0;
+        }
+
+        .footer-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        .copyright {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #4a5568;
+            font-size: 0.95rem;
+            color: #a0aec0;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .container {
+                padding: 70px 20px 90px;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .member-detail {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .member-name {
+                font-size: 2.2rem;
+            }
+
+            .position {
+                font-size: 1.3rem;
+            }
+
+            .bio-section {
+                padding: 30px;
+            }
+
+            .back-button {
+                top: 20px;
+                left: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 60px 15px 120px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .info-section {
+                padding: 30px 20px;
+            }
+
+            .bio-section {
+                padding: 25px 20px;
+            }
+
+            .back-button {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-button {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 返回按钮 -->
+    <a href="page2.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <!-- 移动端导航栏 -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-content">
+            <a href="page2.html" class="nav-item">
+                <i class="fas fa-arrow-left"></i>
+                <span>返回</span>
+            </a>
+
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <div class="journal-logo">旅游景区服务与管理</div>
+            <h1 class="page-title">人物详情</h1>
+            <p class="subtitle">深入了解我们的编辑团队成员</p>
+        </div>
+
+        <div class="member-detail">
+            <div class="photo-section">
+                <img src="ren05.jpg"
+                     alt="马影副教授" class="main-photo">
+
+            </div>
+
+            <div class="info-section">
+                <h2 class="member-name">马影</h2>
+                <p class="position">副教授 | 旅游英语</p>
+
+                <div class="info-grid">
+                    <div class="info-item">
+                        <h3>教育背景</h3>
+                        <p>硕士</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>研究领域</h3>
+                        <p>旅游英语</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>政治面貌</h3>
+                        <p>群众</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>荣获奖项</h3>
+                        <p>
+                            无
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <h3>联系方式</h3>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+86 17767731377</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="bio-section">
+            <h2 class="section-title">主要教学、行业工作经历</h2>
+            <div class="bio-content">
+                <p>马影，吉林大学文学硕士，长春大学旅游学院旅游文化学院专职教师， 持有国家英语导游资格证，为双师型教师。</p>
+
+                <p>自 2013 年 8 月起至今，专注于教学工作，主讲《旅游专业英语》 《景区景点英语》等课程。教学中，积极创新，以赛促教、以赛促改，形 成独特教学模式，在国家级、省级教学比赛中斩获 3 项奖项。在行业工 作经历方面，有景区入企顶岗实习经历，积累了丰富的行业实践经验，能 将实际案例巧妙融入课堂，使教学内容更贴合行业需求。</p>
+            </div>
+        </div>
+
+        <div class="bio-section">
+            <h2 class="section-title">
+                教材编写经历和主要成果
+
+            </h2>
+            <div class="bio-content">
+                <p>作为主编及副主编参与编写教材共计 3 部。在《旅游景区服务与管 理》教材编写过程中，充分发挥自身双师型教师优势，将行业实践经验融 入其中，如在景区解说服务流程板块，加入实际工作案例，使教材内容更 具实操性与前瞻性，助力学生理解行业实际运作，为其未来职业发展奠定 坚实基础。编写成果得到广泛认可，为旅游专业教育发展贡献力量。</p>
+            </div>
+        </div>
+
+
+        <div class="bio-section">
+            <h2 class="section-title">
+                主要研究成果
+
+            </h2>
+            <div class="bio-content">
+                <p>基于 “ 岗课赛证 ” 模式，构建 “景区服务解说流程 + 行业分析 + 文旅融合 ” 内容体系，将景区解说服务、景区运营等岗位需求融入教材。 指导学生在专业技能比赛中获奖 5 项，多次获评优秀指导教师。此外， 积极投身科研，发表 8 篇论文，编写 3 部教材，主持完成 2 项课题、参 与 8 项课题研究，申请 1 项实用新型专利，在教学与行业实践间搭建起 稳固桥梁 。</p>
+            </div>
+        </div>
+
+
+
+        <div class="bio-section">
+            <h2 class="section-title">
+                本教材编写分工及主要贡献
+
+            </h2>
+            <div class="bio-content">
+                <p>参与本教材第三章，第八章第二、第三节内容的编写工作，作为副主 编在教材编写中承担重要角色。分工上，需协助主编制定编写大纲，细化 章节框架与知识点分布，同时负责相应章节撰写，审核初稿质量并提出修 改建议。主要贡献体现在：通过专业把控确保教材知识体系的系统性与逻 辑性，平衡该章节深度与广度，避免内容重复或断层；结合学科前沿与教 学实践优化内容结构，提升教材的实用性与可读性；此外，还需参与教材 配套资源的设计完成，助力教学场景应用，是教材从框架到落地相关章节 的重要推动者。 </p>
+                <p></p>
+            </div>
+        </div>
+
+
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">旅游景区服务与管理</div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 添加简单的动画效果
+        document.addEventListener('DOMContentLoaded', function () {
+            // 元素进入动画
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.member-detail, .bio-section');
+
+                elements.forEach((element, index) => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+
+                    if (elementPosition < screenPosition) {
+                        setTimeout(() => {
+                            element.style.opacity = '1';
+                            element.style.transform = 'translateY(0)';
+                        }, index * 200);
+                    }
+                });
+            };
+
+            // 初始化元素状态
+            const initElements = () => {
+                const elements = document.querySelectorAll('.member-detail, .bio-section');
+
+                elements.forEach(element => {
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(30px)';
+                    element.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+                });
+
+                // 触发一次以检查初始位置
+                animateOnScroll();
+            };
+
+            initElements();
+
+            // 监听滚动事件
+            window.addEventListener('scroll', animateOnScroll);
+
+            // 移动端导航激活状态
+            const navItems = document.querySelectorAll('.nav-item');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
